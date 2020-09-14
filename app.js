@@ -1,7 +1,7 @@
-require("dotenv").config();
-const { Client, Collection } = require("discord.js");
-const fs = require("fs");
-const _config = require("./config.json");
+require('dotenv').config();
+const { Client, Collection } = require('discord.js');
+const fs = require('fs');
+const _config = require('./config.json');
 
 const client = new Client({
   disableEveryone: true,
@@ -9,24 +9,21 @@ const client = new Client({
 
 client.commands = new Collection();
 client.aliases = new Collection();
-client.categories = fs.readdirSync("./commands/");
+client.categories = fs.readdirSync('./commands/');
 
-["command"].forEach((handler) => {
+['command'].forEach((handler) => {
   require(`./handler/${handler}`)(client);
 });
 
-client.on("ready", () => {
-  console.log(
-    `I'm online`,
-  );
-  client.user.setPresence(
-    { activity: { name: `${_config.prefix}help` }, status: "online" },
-  )
+client.on('ready', () => {
+  console.log(`I'm online`);
+  client.user
+    .setPresence({ activity: { name: `${_config.prefix}help` }, status: 'online' })
     .then()
     .catch(console.error);
 });
 
-client.on("message", async (message) => {
+client.on('message', async (message) => {
   //The prefix for this bot
   const prefix = _config.prefix;
 

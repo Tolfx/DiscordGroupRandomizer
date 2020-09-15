@@ -5,9 +5,12 @@ module.exports = {
   aliases: ["s"],
   description: "Sorts something",
   run: async (client, message, args) => {
-    readMembersVoice(message, (id, members) => {
-      console.log(id);
-      console.log(members);
-    });
+    try {
+      const Members = await readMembersVoice(message);
+
+      console.log(Members);
+    } catch (err) {
+      message.channel.send(err);
+    }
   },
 };

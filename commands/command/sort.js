@@ -1,8 +1,16 @@
+const { readMembersVoice } = require("../../lib/findMembers");
+
 module.exports = {
   name: "sort",
-  aliases: ["h"],
+  aliases: ["s"],
   description: "Sorts something",
   run: async (client, message, args) => {
-    message.channel.send("Sorting noises..");
+    try {
+      const data = await readMembersVoice(message);
+
+      message.channel.send(`ID: ${data.channelID} \nAmount: ${data.members.length}`);
+    } catch (err) {
+      message.channel.send(err);
+    }
   },
 };

@@ -6,9 +6,9 @@ module.exports = {
   description: "Sorts something",
   run: async (client, message, args) => {
     try {
-      const Members = await readMembersVoice(message);
+      const data = await readMembersVoice(message);
 
-      console.log(Members);
+      message.channel.send(`ID: ${data.channelID} \nAmount: ${data.members.length}`);
     } catch (err) {
       message.channel.send(err);
     }

@@ -20,7 +20,9 @@ module.exports = {
       const data = await readMembersVoice(message);
 
       message.channel.send(`ID: ${data.channelID} \nAmount: ${data.members.length}`);
-      createChannel(message, roles);
+      createChannel(message, roles).then((data) => {
+        console.log(data.map((data) => data.id));
+      });
     } catch (err) {
       message.channel.send(err);
     }

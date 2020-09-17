@@ -1,6 +1,7 @@
 const { readMembersVoice } = require("../../lib/manageMembers");
 const { createChannel } = require("../../lib/manageChannels");
 const { createRoles } = require("../../lib/manageServer");
+const fs = require("fs");
 
 module.exports = {
   name: "sort",
@@ -8,16 +9,46 @@ module.exports = {
   description: "Sorts something",
   run: async (client, message, args) => {
     try {
-      let names = "Grupprum";
-      let nameArray = [];
-      const data = await readMembersVoice(message);
+      //Stop!
+      fs.readFile(`./data/${message.author.username}.json`, async (err, data) => {
+        if (data) {
+          return message.channel.send("Uh.. No!");
+        } else {
+          let names = "Grupprum";
+          let nameArray = [];
+          const data = await readMembersVoice(message);
 
-      for (let i = 0; i < data.members.length; ++i) {
-        nameArray.push((names += i));
-      }
+          for (let i = 0; i < data.members.length; ++i) {
+            nameArray.push((names += i));
+          }
 
-      await createRoles(message, data.members.length, nameArray).then(async (roles) => {
-        await createChannel(message, roles);
+          await createRoles(message, data.members.length, nameArray).then(async (roles) => {
+            //Channel
+            let server = await createChannel(message, roles);
+
+            //Channel ID
+            let serverID = server.map((channel) => channel.id);
+
+            //Channel Name
+            let serverName = server.map((channel) => channel.name);
+
+            //Save it in an object
+            const dataObject = {
+              author: message.author.username,
+              serverID,
+              serverName,
+            };
+
+            //Save it for now for later.
+            /*fs.appendFile(
+            `./data/${message.author.username}.json`,
+            JSON.stringify(dataObject),
+            (err, file) => {
+              if (err) throw err;
+            }
+          );*/
+          });
+        }
       });
     } catch (err) {
       message.channel.send(err);

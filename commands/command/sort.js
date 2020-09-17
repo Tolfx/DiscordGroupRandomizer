@@ -32,21 +32,25 @@ module.exports = {
             //Channel Name
             let serverName = server.map((channel) => channel.name);
 
+            //Roles ID
+            let roleID = roles.map((role) => role.id);
+
             //Save it in an object
             const dataObject = {
               author: message.author.username,
               serverID,
               serverName,
+              roleID,
             };
 
             //Save it for now for later.
-            /*fs.appendFile(
-            `./data/${message.author.username}.json`,
-            JSON.stringify(dataObject),
-            (err, file) => {
-              if (err) throw err;
-            }
-          );*/
+            fs.appendFile(
+              `./data/${message.author.username}.json`,
+              JSON.stringify(dataObject),
+              (err, file) => {
+                if (err) throw err;
+              }
+            );
           });
         }
       });

@@ -14,13 +14,15 @@ module.exports = {
         const information = JSON.parse(data);
 
         //Remove the channels
-        removeChannels(message, information.serverID);
+        removeChannels(message, information.serverID).catch((err) => message.channel.send(err));
 
         //Remove the roles
-        removeRoles(message, information.roleID);
+        removeRoles(message, information.roleID).catch((err) => message.channel.send(err));
 
         //Delete the file.
-        fs.unlink(`./data/${message.author.id}.json`);
+        fs.unlink(`./data/${message.author.id}.json`, (err) => {
+          if (err) return console.log("an error");
+        });
       } else {
         return message.channel.send(`Please use ${_config.prefix}sort first`);
       }

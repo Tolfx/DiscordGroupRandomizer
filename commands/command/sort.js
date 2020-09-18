@@ -1,6 +1,7 @@
 const { readMembersVoice } = require("../../lib/manageMembers");
 const { createChannel } = require("../../lib/manageChannels");
 const { createRoles } = require("../../lib/manageServer");
+const _config = require("../../config.json");
 const fs = require("fs");
 
 module.exports = {
@@ -10,16 +11,18 @@ module.exports = {
   run: async (client, message, args) => {
     try {
       //Stop!
-      fs.readFile(`./data/${message.author.username}.json`, async (err, data) => {
+      fs.readFile(`./data/${message.author.id}.json`, async (err, data) => {
         if (data) {
-          return message.channel.send("Uh.. No!");
+          return message.channel.send(
+            `You've been using this command before, please use ${_config.prefix}clear first.`
+          );
         } else {
           let names = "Grupprum";
           let nameArray = [];
           const data = await readMembersVoice(message);
 
           for (let i = 0; i < data.members.length; ++i) {
-            nameArray.push((names += i));
+            nameArray.push((names += i + 1));
           }
 
           await createRoles(message, data.members.length, nameArray).then(async (roles) => {
@@ -37,7 +40,7 @@ module.exports = {
 
             //Save it in an object
             const dataObject = {
-              author: message.author.username,
+              authorID: message.author.id,
               serverID,
               serverName,
               roleID,
@@ -45,7 +48,7 @@ module.exports = {
 
             //Save it for now for later.
             fs.appendFile(
-              `./data/${message.author.username}.json`,
+              `./data/${message.author.id}.json`,
               JSON.stringify(dataObject),
               (err, file) => {
                 if (err) throw err;

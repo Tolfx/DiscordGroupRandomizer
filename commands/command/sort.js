@@ -53,12 +53,15 @@ module.exports = {
             //Roles ID
             let roleID = roles.map((role) => role.id);
 
+            let membersID = data.members.map((r) => r.id);
+
             //Save it in an object
             const dataObject = {
               authorID: message.author.id,
               authorChannel: data.channelID,
               serverID,
               roleID,
+              Members: membersID,
             };
 
             //Save it for now for later.

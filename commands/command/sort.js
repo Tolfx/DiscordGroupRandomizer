@@ -39,7 +39,7 @@ module.exports = {
 
           //Creates the names kek
           for (let i = 0; i < amountOfGroups; ++i) {
-            nameArray.push((names += i));
+            nameArray.push(names + i);
           }
 
           //Create the roles.

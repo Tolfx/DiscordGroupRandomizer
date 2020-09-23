@@ -1,18 +1,24 @@
-const { readMembersVoice, moveMember } = require("../../lib/manageMembers");
-const { createChannel } = require("../../lib/manageChannels");
-const { createRoles } = require("../../lib/manageServer");
-const _config = require("../../config.json");
-const fs = require("fs");
+const { readMembersVoice, moveMember, giveRole } = require('../../lib/manageMembers');
+const { createChannel } = require('../../lib/manageChannels');
+const { createRoles } = require('../../lib/manageServer');
+const _config = require('../../config.json');
+const fs = require('fs');
 
 module.exports = {
-  name: "sort",
-  aliases: ["s"],
-  description: "Sorts something",
+  name: 'sort',
+  aliases: ['s'],
+  description: 'Sorts something',
   run: async (client, message, args) => {
+    if (!message.member._roles.includes(_config.adminRoleID))
+      return message.channel.send('Not admin');
+
     if (!args[0])
-      return message.channel.send("Please provide an amount of how many groups you want");
+      return message.channel.send('Please provide an amount of how many groups you want');
+
+    if (typeof parseInt(args[0]) !== 'number') return message.channel.send('Not a number');
 
     const amountOfGroups = parseInt(args[0]);
+    let somevariableidk = 0;
 
     try {
       //Stop!
@@ -33,7 +39,7 @@ module.exports = {
 
           //Creates the names kek
           for (let i = 0; i < amountOfGroups; ++i) {
-            nameArray.push((names += i + 1));
+            nameArray.push((names += i));
           }
 
           //Create the roles.
@@ -44,17 +50,14 @@ module.exports = {
             //Channel ID
             let serverID = server.map((channel) => channel.id);
 
-            //Channel Name
-            let serverName = server.map((channel) => channel.name);
-
             //Roles ID
             let roleID = roles.map((role) => role.id);
 
             //Save it in an object
             const dataObject = {
               authorID: message.author.id,
+              authorChannel: data.channelID,
               serverID,
-              serverName,
               roleID,
             };
 
@@ -66,7 +69,17 @@ module.exports = {
                 if (err) throw err;
               }
             );
-            moveMember(client, message, data.members[0].id, serverID[0]);
+            for (let i = 0; i < data.members.length; ++i) {
+              if (somevariableidk === amountOfGroups) {
+                somevariableidk = 0;
+              }
+              if (data.members[i].id === message.author.id) {
+                return;
+              }
+              giveRole(message, data.members[i].id, roleID[somevariableidk]);
+              moveMember(client, message, data.members[i].id, serverID[somevariableidk]);
+              ++somevariableidk;
+            }
           });
         }
       });

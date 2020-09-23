@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "common-tags": "^1.8.0",
     "discord": "^0.8.2",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",

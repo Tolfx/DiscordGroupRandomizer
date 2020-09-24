@@ -20,12 +20,14 @@ module.exports = {
     
     
     **Authors**
-    \`Matteus Westman\`
-    \`Niklas Hjelm\`
-    \`Alen M\``
+    [Matteus W | Tolfx](https://github.com/Tolfx)
+    [Niklas H](https://github.com/NiklasHj)
+    [Alen M](https://github.com/ShinzenATT)
+    
+    [Github Repo](https://github.com/Tolfx/DiscordGroupRandomizer)`
       )
       .setColor("#333366")
-      .setAuthor("Sorter")
+      .setAuthor("Sorter", client.user.avatarURL({ format: "png", dynamic: true, size: 128 }))
       .setTimestamp();
 
     message.channel.send(embed);

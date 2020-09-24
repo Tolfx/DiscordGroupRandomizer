@@ -1,21 +1,21 @@
-const { readMembersVoice, moveMember, giveRole } = require('../../lib/manageMembers');
-const { createChannel } = require('../../lib/manageChannels');
-const { createRoles } = require('../../lib/manageServer');
-const _config = require('../../config.json');
-const fs = require('fs');
+const { readMembersVoice, moveMember, giveRole } = require("../../lib/manageMembers");
+const { createChannel } = require("../../lib/manageChannels");
+const { createRoles } = require("../../lib/manageServer");
+const _config = require("../../config.json");
+const fs = require("fs");
 
 module.exports = {
-  name: 'sort',
-  aliases: ['s'],
-  description: 'Sorts something',
+  name: "sort",
+  aliases: ["s"],
+  description: "Sorts something",
   run: async (client, message, args) => {
     if (!message.member._roles.includes(_config.adminRoleID))
-      return message.channel.send('Not admin');
+      return message.channel.send("Not admin");
 
     if (!args[0])
-      return message.channel.send('Please provide an amount of how many groups you want');
+      return message.channel.send("Please provide an amount of how many groups you want");
 
-    if (typeof parseInt(args[0]) !== 'number') return message.channel.send('Not a number');
+    if (typeof parseInt(args[0]) !== "number") return message.channel.send("Not a number");
 
     const amountOfGroups = parseInt(args[0]);
     let somevariableidk = 0;
@@ -77,14 +77,16 @@ module.exports = {
                 somevariableidk = 0;
               }
               if (data.members[i].id === message.author.id) {
-                return;
+                continue;
+              } else {
+                giveRole(message, data.members[i].id, roleID[somevariableidk]);
+                moveMember(client, message, data.members[i].id, serverID[somevariableidk]);
+                ++somevariableidk;
               }
-              giveRole(message, data.members[i].id, roleID[somevariableidk]);
-              moveMember(client, message, data.members[i].id, serverID[somevariableidk]);
-              ++somevariableidk;
             }
           });
         }
+        
       });
     } catch (err) {
       message.channel.send(err);

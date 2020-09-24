@@ -15,9 +15,7 @@ module.exports = {
         const information = JSON.parse(data);
 
         for (let i = 0; i < information.Members.length; ++i) {
-          moveMember(client, message, information.Members[i], information.authorChannel).catch(
-            console.error
-          );
+          moveMember(client, message, information.Members[i], information.authorChannel)
 
           if (i + 1 === information.Members.length) {
             //Remove the channels

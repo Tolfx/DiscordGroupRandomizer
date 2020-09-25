@@ -19,6 +19,7 @@ module.exports = {
 
     const amountOfGroups = parseInt(args[0]);
     let somevariableidk = 0;
+    let membersObject = [];
 
     try {
       //Stop!
@@ -53,25 +54,6 @@ module.exports = {
             //Roles ID
             let roleID = roles.map((role) => role.id);
 
-            let membersID = data.members.map((r) => r.id);
-
-            //Save it in an object
-            const dataObject = {
-              authorID: message.author.id,
-              authorChannel: data.channelID,
-              serverID,
-              roleID,
-              Members: membersID,
-            };
-
-            //Save it for now for later.
-            fs.appendFile(
-              `./data/${message.author.id}.json`,
-              JSON.stringify(dataObject),
-              (err, file) => {
-                if (err) throw err;
-              }
-            );
             for (let i = 0; i < data.members.length; ++i) {
               if (somevariableidk === amountOfGroups) {
                 somevariableidk = 0;
@@ -79,14 +61,40 @@ module.exports = {
               if (data.members[i].id === message.author.id) {
                 continue;
               } else {
+                console.log("Moving members..");
+                membersObject.push({
+                  Member: data.members[i].id,
+                  Server: serverID[somevariableidk],
+                });
                 giveRole(message, data.members[i].id, roleID[somevariableidk]);
                 moveMember(client, message, data.members[i].id, serverID[somevariableidk]);
                 ++somevariableidk;
               }
+
+              if (i + 1 === data.members.length) {
+                //Save it in an object
+                const dataObject = {
+                  authorID: message.author.id,
+                  authorChannel: data.channelID,
+                  serverID,
+                  roleID,
+                  Members: membersObject,
+                };
+
+                message.channel.send("Created all of the channels and moved the members.");
+
+                //Save it for now for later.
+                fs.appendFile(
+                  `./data/${message.author.id}.json`,
+                  JSON.stringify(dataObject),
+                  (err, file) => {
+                    if (err) throw err;
+                  }
+                );
+              }
             }
           });
         }
-        
       });
     } catch (err) {
       message.channel.send(err);

@@ -15,9 +15,14 @@ module.exports = {
     \`${_config.prefix}sort\` [Amount of groups]
     This command will sort every member in the voice channel and move them to the channel
 
+    \`${_config.prefix}gather\`
+    This command will gather everyone back to the main channel where you executed ${_config.prefix}sort.
+
+    \`${_config.prefix}spread\`
+    This command will spread all of the members back to their channel where they got assigned too. 
+
     \`${_config.prefix}clear\`
     This command will remove all of the channels and move all of the members back to the channels.
-    
     
     **Authors**
     [Matteus W | Tolfx](https://github.com/Tolfx)

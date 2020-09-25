@@ -22,7 +22,7 @@ module.exports = {
     This command will spread all of the members back to their channel where they got assigned too. 
 
     \`${_config.prefix}clear\`
-    This command will remove all of the channels and move all of the members back to the channels.
+    This command will remove all of the channels and roles according to the user who executed it.
     
     **Authors**
     [Matteus W | Tolfx](https://github.com/Tolfx)

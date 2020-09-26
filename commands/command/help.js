@@ -33,7 +33,8 @@ module.exports = {
       )
       .setColor("#333366")
       .setAuthor("Sorter", client.user.avatarURL({ format: "png", dynamic: true, size: 128 }))
-      .setTimestamp();
+      .setTimestamp()
+      .setFooter(`Version: ${_config.version}`);
 
     message.channel.send(embed);
   },

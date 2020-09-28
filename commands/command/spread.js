@@ -1,8 +1,4 @@
-const { MessageEmbed } = require("discord.js");
-const { stripIndent } = require("common-tags");
-const { readMembersVoice, moveMember, giveRole } = require("../../lib/manageMembers");
-const { createChannel } = require("../../lib/manageChannels");
-const { createRoles } = require("../../lib/manageServer");
+const { moveMember } = require("../../lib/manageMembers");
 const fs = require("fs");
 const _config = require("../../config.json");
 

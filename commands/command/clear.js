@@ -2,7 +2,6 @@ const fs = require("fs");
 const _config = require("../../config.json");
 const { removeChannels } = require("../../lib/manageChannels");
 const { removeRoles } = require("../../lib/manageServer");
-const { readMembersVoice, moveMember, giveRole } = require("../../lib/manageMembers");
 
 module.exports = {
   name: "clear",

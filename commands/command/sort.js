@@ -15,7 +15,8 @@ module.exports = {
     if (!args[0])
       return message.channel.send("Please provide an amount of how many groups you want");
 
-    if (typeof parseInt(args[0]) !== "number") return message.channel.send("Not a number");
+    if (typeof parseInt(args[0]) !== "number") 
+      return message.channel.send("Not a number");
 
     const amountOfGroups = parseInt(args[0]);
     let somevariableidk = 0;
@@ -58,6 +59,7 @@ module.exports = {
               if (somevariableidk === amountOfGroups) {
                 somevariableidk = 0;
               }
+              
               if (data.members[i].id === message.author.id) {
                 continue;
               } else {
@@ -67,7 +69,7 @@ module.exports = {
                   Server: serverID[somevariableidk],
                 });
                 giveRole(message, data.members[i].id, roleID[somevariableidk]);
-                moveMember(client, message, data.members[i].id, serverID[somevariableidk]);
+                moveMember(client, message, data.members[i].id, serverID[somevariableidk], (err, data) => null);
                 ++somevariableidk;
               }
 

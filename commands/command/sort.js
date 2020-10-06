@@ -52,7 +52,7 @@ module.exports = {
 
           //Creates the names kek
           for (let i = 0; i < amountOfGroups; ++i) {
-            nameArray.push(names + i+1);
+            nameArray.push(names + (i+1));
           }
 
           //Create the roles.
@@ -67,8 +67,30 @@ module.exports = {
             //Roles ID
             let roleID = roles.map((role) => role.id);
 
+            //For safety reasons...
+            if(data.members.length === 1) {
+              if(data.members[0].id === message.author.id) {
+                //Save it in an object
+                const emptyMembers = {
+                  authorID: message.author.id,
+                  authorChannel: data.channelID,
+                  serverID,
+                  roleID,
+                };
+                //Save it for now for later.
+                fs.appendFile(
+                  `./data/${message.author.id}.json`,
+                  JSON.stringify(emptyMembers),
+                  (err, file) => {
+                    if (err) throw err;
+                  }
+                );
+              }
+            }
+
             //Loop for each members in the channel.
-            for (let i = 0; i < data.members.length; ++i) {
+            for (let i = 0; i < data.members.length; ++i) 
+            {
 
               //Explains it self?
               if (somevariableidk === amountOfGroups) {

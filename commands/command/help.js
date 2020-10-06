@@ -19,7 +19,10 @@ module.exports = {
     This command will gather everyone back to the main channel where you executed ${_config.prefix}sort.
 
     \`${_config.prefix}spread\`
-    This command will spread all of the members back to their channel where they got assigned too. 
+    This command will spread all of the members back to their channel where they got assigned too.
+
+    \`${_config.prefix}askrand [number]\`
+    This command will ask a random person in one of your voice channels you've been creating by doing sort.
 
     \`${_config.prefix}clear\`
     This command will remove all of the channels and roles according to the user who executed it.

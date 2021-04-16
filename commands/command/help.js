@@ -26,6 +26,9 @@ module.exports = {
 
     \`${_config.prefix}clear\`
     This command will remove all of the channels and roles according to the user who executed it.
+
+    \`${_config.prefix}elever\`
+    Once executed it will count all members in the voicechannel the user is in.
     
     **Authors**
     [Matteus W | Tolfx](https://github.com/Tolfx)
